@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "huggingface-datasets-cocoapi-tools"
+version = "0.1.0"
+description = ""
+authors = ["Shunsuke KITADA <shunsuke.kitada.0831@gmail.com>"]
+readme = "README.md"
+packages = [{ include = "hfcocoapi" }]
+package-mode = true
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pydantic = ">=2.0.0"
+pycocotools = ">=2.0.2"
+datasets = { extras = ["vision"], version = ">=1.0.0", optional = true }
+
+[tool.poetry.group.dev.dependencies]
+ruff = ">=0.1.5"
+mypy = ">=1.0.0"
+pytest = ">=6.0.0"
+
+[tool.poetry.extras]
+datasets = ["datasets"]
+
+[tool.mypy]
+python_version = "3.9"
+ignore_missing_imports = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
