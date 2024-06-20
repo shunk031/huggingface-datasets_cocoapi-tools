@@ -1,6 +1,6 @@
 # Changelog
 
-## [v0.0.3](https://github.com/shunk031/huggingface-datasets_cocoapi-tools/compare/v0.0.2...v0.0.3) - 2024-06-20
+## [v0.1.0](https://github.com/shunk031/huggingface-datasets_cocoapi-tools/compare/v0.0.2...v0.1.0) - 2024-06-20
 - update README.md by @shunk031 in https://github.com/shunk031/huggingface-datasets_cocoapi-tools/pull/6
 
 ## [v0.0.2](https://github.com/shunk031/huggingface-datasets_cocoapi-tools/compare/v0.0.1...v0.0.2) - 2024-06-20
