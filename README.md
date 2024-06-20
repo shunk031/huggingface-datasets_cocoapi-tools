@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/shunk031/huggingface-datasets_cocoapi-tools/actions/workflows/ci.yaml/badge.svg)](https://github.com/shunk031/huggingface-datasets_cocoapi-tools/actions/workflows/ci.yaml)
 [![Release](https://github.com/shunk031/huggingface-datasets_cocoapi-tools/actions/workflows/release.yaml/badge.svg)](https://github.com/shunk031/huggingface-datasets_cocoapi-tools/actions/workflows/release.yaml)
+[![Deploy](https://github.com/shunk031/huggingface-datasets_cocoapi-tools/actions/workflows/deploy.yaml/badge.svg)](https://github.com/shunk031/huggingface-datasets_cocoapi-tools/actions/workflows/deploy.yaml)
 
 ## Installation
 
