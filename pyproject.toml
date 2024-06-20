@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "huggingface-datasets-cocoapi-tools"
 # specified by poetry-dynamic-versioning
-version = "0.0.0"
+version = "0.0.1"
 description = "A helper library for easily converting MSCOCO format data using the loading script of huggingface datasets."
 authors = ["Shunsuke KITADA <shunsuke.kitada.0831@gmail.com>"]
 readme = "README.md"
