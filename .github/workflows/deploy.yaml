@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           make setup
-          pip install poetry poetry-dynamic-versioning twine
+          pip install poetry-dynamic-versioning twine
 
       - name: Build and publish
         env:
