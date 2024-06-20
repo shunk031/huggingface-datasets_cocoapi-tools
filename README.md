@@ -1,6 +1,7 @@
 # COCO API tools for 🤗 Huggingface Dataset
 
 [![CI](https://github.com/shunk031/huggingface-datasets_cocoapi-tools/actions/workflows/ci.yaml/badge.svg)](https://github.com/shunk031/huggingface-datasets_cocoapi-tools/actions/workflows/ci.yaml)
+[![Release](https://github.com/shunk031/huggingface-datasets_cocoapi-tools/actions/workflows/release.yaml/badge.svg)](https://github.com/shunk031/huggingface-datasets_cocoapi-tools/actions/workflows/release.yaml)
 
 ## Installation
 
