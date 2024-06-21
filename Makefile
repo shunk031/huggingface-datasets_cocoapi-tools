@@ -11,8 +11,16 @@ install:
 	poetry install
 
 .PHONY: install-datasets
-install-api:
+install-datasets:
 	poetry install --extras datasets
+
+.PHONY: install-cocoapi
+install-cocoapi:
+	poetry install --extras cocoapi
+
+.PHONY: install-all
+install-all:
+	poetry install --extras all
 
 #
 # linter/formatter/typecheck
