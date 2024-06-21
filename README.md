@@ -16,10 +16,17 @@ You can install the library via pip:
 pip install huggingface-datasets-cocoapi-tools
 ```
 
-You can also install the library with the optional dependencies for [🤗 huggingface datasets](https://github.com/huggingface/datasets):
+You can also install the library with the optional dependencies:
 
-```
-pip install 'huggingface-datasets-cocoapi-tools[datasets]'
+```shell
+# for pycocotools
+pip install 'huggingface-datasets-cocoapi-tools[cocoapi]' 
+
+# for huggingface/datasets
+pip install 'huggingface-datasets-cocoapi-tools[datasets]' 
+
+# for all dependencies
+pip install 'huggingface-datasets-cocoapi-tools[all]'
 ```
 
 ## Acknowledgement
