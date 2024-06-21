@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.2.1](https://github.com/shunk031/huggingface-datasets_cocoapi-tools/compare/v0.2.0...v0.2.1) - 2024-06-21
+- update README.md by @shunk031 in https://github.com/shunk031/huggingface-datasets_cocoapi-tools/pull/14
+
 ## [v0.2.0](https://github.com/shunk031/huggingface-datasets_cocoapi-tools/compare/v0.1.0...v0.2.0) - 2024-06-21
 - update README.md by @shunk031 in https://github.com/shunk031/huggingface-datasets_cocoapi-tools/pull/10
 - make `pycocotools` an optional module by @shunk031 in https://github.com/shunk031/huggingface-datasets_cocoapi-tools/pull/12
