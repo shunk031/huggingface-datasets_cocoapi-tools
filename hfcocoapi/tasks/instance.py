@@ -1,12 +1,20 @@
+import logging
 from typing import Dict, List, Tuple, Union
 
 import numpy as np
-from pycocotools import mask as cocomask
 
 from hfcocoapi.models import ImageData
 from hfcocoapi.typehint import CompressedRLE, ImageId, JsonDict, UncompressedRLE
 
 from .annotation import AnnotationData
+
+logger = logging.getLogger(__name__)
+
+try:
+    from pycocotools import mask as cocomask
+except ImportError:
+    logger.warning('Please install "pycocotools" to use this module')
+    cocomask = None
 
 
 class InstancesAnnotationData(AnnotationData):
@@ -24,6 +32,8 @@ class InstancesAnnotationData(AnnotationData):
         height: int,
         width: int,
     ) -> CompressedRLE:
+        assert cocomask is not None, "Please install 'pycocotools' to use this module"
+
         if iscrowd:
             rle = cocomask.frPyObjects(segmentation, h=height, w=width)
         else:

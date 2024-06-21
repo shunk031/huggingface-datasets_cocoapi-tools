@@ -11,7 +11,7 @@ package-mode = true
 [tool.poetry.dependencies]
 python = "^3.9"
 pydantic = ">=2.0.0"
-pycocotools = ">=2.0.2"
+pycocotools = { version = ">=2.0.2", optional = true }
 datasets = { extras = ["vision"], version = ">=1.0.0", optional = true }
 
 [tool.poetry.group.dev.dependencies]
@@ -20,7 +20,9 @@ mypy = ">=1.0.0"
 pytest = ">=6.0.0"
 
 [tool.poetry.extras]
+cocoapi = ["pycocotools"]
 datasets = ["datasets"]
+all = ["pycocotools", "datasets"]
 
 [tool.mypy]
 python_version = "3.9"
