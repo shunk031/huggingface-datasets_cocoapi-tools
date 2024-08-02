@@ -9,7 +9,14 @@ from PIL import Image
 
 from hfcocoapi.models import CategoryData, ImageData, LicenseData
 from hfcocoapi.tasks.annotation import AnnotationData
-from hfcocoapi.typehint import CategoryId, ImageId, JsonDict, LicenseId, PilImage
+from hfcocoapi.typehint import (
+    CategoryId,
+    ImageId,
+    JsonDict,
+    LicenseId,
+    PathLike,
+    PilImage,
+)
 from hfcocoapi.utils import tqdm
 
 logger = logging.getLogger(__name__)
@@ -20,11 +27,11 @@ if TYPE_CHECKING:
 
 
 class MsCocoProcessor(object, metaclass=abc.ABCMeta):
-    def load_image(self, image_path: str) -> PilImage:
+    def load_image(self, image_path: PathLike) -> PilImage:
         logger.info(f"Load image from {image_path}")
         return Image.open(image_path)
 
-    def load_annotation_json(self, ann_file_path: str) -> JsonDict:
+    def load_annotation_json(self, ann_file_path: PathLike) -> JsonDict:
         logger.info(f"Load annotation json from {ann_file_path}")
 
         with open(ann_file_path, "r") as rf:
