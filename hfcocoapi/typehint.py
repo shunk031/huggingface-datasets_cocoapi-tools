@@ -1,4 +1,5 @@
-from typing import Annotated, Any, Dict, List, Literal, Tuple
+import pathlib
+from typing import Annotated, Any, Dict, List, Literal, Tuple, Union
 
 from PIL.Image import Image
 from typing_extensions import TypedDict
@@ -13,6 +14,8 @@ Bbox = Tuple[float, float, float, float]
 MscocoSplits = Literal["train", "val", "test"]
 
 PilImage = Annotated[Image, "Pillow Image"]
+
+PathLike = Union[str, pathlib.Path]
 
 
 class CategoryDict(TypedDict):

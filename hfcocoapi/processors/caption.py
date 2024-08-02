@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 import os
 from collections import defaultdict
-from typing import TYPE_CHECKING, Dict, Iterator, List, Tuple, Type, TypedDict
+from typing import TYPE_CHECKING, Dict, Iterator, List, Optional, Tuple, Type, TypedDict
 
 from hfcocoapi.models import ImageData, LicenseData
 from hfcocoapi.processors import MsCocoProcessor
@@ -59,10 +59,10 @@ class CaptionsProcessor(MsCocoProcessor):
 
     def generate_examples(  # type: ignore[override]
         self,
-        image_dir: str,
         images: Dict[ImageId, ImageData],
         annotations: Dict[ImageId, List[CaptionsAnnotationData]],
         licenses: Dict[LicenseId, LicenseData],
+        image_dir: Optional[str] = None,
         **kwargs,
     ) -> Iterator[Tuple[int, CaptionExample]]:
         for idx, image_id in enumerate(images.keys()):
@@ -71,8 +71,12 @@ class CaptionsProcessor(MsCocoProcessor):
 
             assert len(image_anns) > 0
 
-            image = self.load_image(
-                image_path=os.path.join(image_dir, image_data.file_name),
+            image = (
+                self.load_image(
+                    image_path=os.path.join(image_dir, image_data.file_name),
+                )
+                if image_dir is not None
+                else None
             )
             example = image_data.model_dump()
             example["image"] = image
