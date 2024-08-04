@@ -1,12 +1,14 @@
+from typing import Optional
+
 from pydantic import BaseModel, Field
 
 
 class ImageData(BaseModel):
     image_id: int = Field(alias="id")
-    license_id: int = Field(alias="license")
+    license_id: Optional[int] = Field(default=None, alias="license")
     file_name: str
-    coco_url: str
     height: int
     width: int
-    date_captured: str
-    flickr_url: str
+    coco_url: Optional[str] = None
+    date_captured: Optional[str] = None
+    flickr_url: Optional[str] = None

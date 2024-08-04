@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 import os
 from collections import defaultdict
-from typing import TYPE_CHECKING, Dict, Iterator, List, Tuple, Type, TypedDict
+from typing import TYPE_CHECKING, Dict, Iterator, List, Optional, Tuple, Type, TypedDict
 
 import numpy as np
 
@@ -20,6 +20,7 @@ from hfcocoapi.typehint import (
     ImageId,
     JsonDict,
     LicenseId,
+    PathLike,
 )
 from hfcocoapi.utils import tqdm
 
@@ -111,11 +112,11 @@ class InstancesProcessor(MsCocoProcessor):
 
     def generate_examples(  # type: ignore[override]
         self,
-        image_dir: str,
+        image_dir: PathLike,
         images: Dict[ImageId, ImageData],
         annotations: Dict[ImageId, List[InstancesAnnotationData]],
-        licenses: Dict[LicenseId, LicenseData],
         categories: Dict[CategoryId, CategoryData],
+        licenses: Optional[Dict[LicenseId, LicenseData]] = None,
     ) -> Iterator[Tuple[int, InstanceExample]]:
         for idx, image_id in enumerate(images.keys()):
             image_data = images[image_id]
@@ -130,7 +131,10 @@ class InstancesProcessor(MsCocoProcessor):
             )
             example = image_data.model_dump()
             example["image"] = image
-            example["license"] = licenses[image_data.license_id].model_dump()
+
+            if licenses and image_data.license_id is not None:
+                licenses_dict = licenses[image_data.license_id].model_dump()
+                example["license"] = licenses_dict
 
             example["annotations"] = []
             for ann in image_anns:
