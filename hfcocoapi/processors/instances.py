@@ -102,7 +102,7 @@ class InstancesProcessor(MsCocoProcessor):
         ann_dicts = sorted(ann_dicts, key=lambda d: d["image_id"])
 
         for ann_dict in tqdm(ann_dicts, desc=tqdm_desc):
-            ann_data = InstancesAnnotationData.from_dict(
+            ann_data = instances_annotation_class.from_dict(
                 ann_dict, images=images, decode_rle=decode_rle
             )
             annotations[ann_data.image_id].append(ann_data)
