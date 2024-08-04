@@ -133,8 +133,7 @@ class InstancesProcessor(MsCocoProcessor):
             example["image"] = image
 
             if licenses and image_data.license_id is not None:
-                licenses_dict = licenses[image_data.license_id].model_dump()
-                example["license"] = licenses_dict
+                example["license"] = licenses[image_data.license_id].model_dump()
 
             example["annotations"] = []
             for ann in image_anns:

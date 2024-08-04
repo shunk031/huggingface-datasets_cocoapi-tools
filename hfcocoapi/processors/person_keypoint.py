@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 import os
 from collections import defaultdict
-from typing import TYPE_CHECKING, Dict, Iterator, List, Tuple, TypedDict
+from typing import TYPE_CHECKING, Dict, Iterator, List, Optional, Tuple, TypedDict
 
 from hfcocoapi.models import CategoryData, ImageData, LicenseData
 from hfcocoapi.tasks import PersonKeypointsAnnotationData
@@ -78,8 +78,8 @@ class PersonKeypointsProcessor(InstancesProcessor):
         image_dir: str,
         images: Dict[ImageId, ImageData],
         annotations: Dict[ImageId, List[PersonKeypointsAnnotationData]],
-        licenses: Dict[LicenseId, LicenseData],
         categories: Dict[CategoryId, CategoryData],
+        licenses: Optional[Dict[LicenseId, LicenseData]] = None,
     ) -> Iterator[Tuple[int, PersonKeypointExample]]:
         for idx, image_id in enumerate(images.keys()):
             image_data = images[image_id]
@@ -95,7 +95,9 @@ class PersonKeypointsProcessor(InstancesProcessor):
             )
             example = image_data.model_dump()
             example["image"] = image
-            example["license"] = licenses[image_data.license_id].model_dump()
+
+            if licenses and image_data.license_id is not None:
+                example["license"] = licenses[image_data.license_id].model_dump()
 
             example["annotations"] = []
             for ann in image_anns:
