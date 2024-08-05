@@ -3,7 +3,9 @@ from __future__ import annotations
 import logging
 import os
 from collections import defaultdict
-from typing import TYPE_CHECKING, Dict, Iterator, List, Optional, Tuple, TypedDict
+from typing import Dict, Iterator, List, Optional, Tuple, TypedDict
+
+import datasets as ds
 
 from hfcocoapi.models import CategoryData, ImageData, LicenseData
 from hfcocoapi.tasks import PersonKeypointsAnnotationData
@@ -13,10 +15,6 @@ from hfcocoapi.utils import tqdm
 from .instances import InstanceAnnotationDict, InstancesProcessor
 
 logger = logging.getLogger(__name__)
-
-
-if TYPE_CHECKING:
-    import datasets as ds
 
 
 class KeypointDict(TypedDict):

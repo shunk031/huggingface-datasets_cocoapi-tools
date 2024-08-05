@@ -3,8 +3,9 @@ from __future__ import annotations
 import abc
 import json
 import logging
-from typing import TYPE_CHECKING, Dict, List, Type
+from typing import Dict, List, Type
 
+import datasets as ds
 from PIL import Image
 
 from hfcocoapi.models import CategoryData, ImageData, LicenseData
@@ -20,10 +21,6 @@ from hfcocoapi.typehint import (
 from hfcocoapi.utils import tqdm
 
 logger = logging.getLogger(__name__)
-
-
-if TYPE_CHECKING:
-    import datasets as ds
 
 
 class MsCocoProcessor(object, metaclass=abc.ABCMeta):
@@ -74,8 +71,6 @@ class MsCocoProcessor(object, metaclass=abc.ABCMeta):
         return categories
 
     def get_features_base_dict(self):
-        import datasets as ds
-
         return {
             "image_id": ds.Value("int64"),
             "image": ds.Image(),

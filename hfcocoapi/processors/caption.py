@@ -3,7 +3,9 @@ from __future__ import annotations
 import logging
 import os
 from collections import defaultdict
-from typing import TYPE_CHECKING, Dict, Iterator, List, Optional, Tuple, Type, TypedDict
+from typing import Dict, Iterator, List, Optional, Tuple, Type, TypedDict
+
+import datasets as ds
 
 from hfcocoapi.models import ImageData, LicenseData
 from hfcocoapi.processors import MsCocoProcessor
@@ -19,10 +21,6 @@ from hfcocoapi.typehint import (
 from hfcocoapi.utils import tqdm
 
 logger = logging.getLogger(__name__)
-
-
-if TYPE_CHECKING:
-    import datasets as ds
 
 
 class CaptionAnnotationDict(TypedDict):

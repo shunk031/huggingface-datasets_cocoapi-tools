@@ -3,8 +3,9 @@ from __future__ import annotations
 import logging
 import os
 from collections import defaultdict
-from typing import TYPE_CHECKING, Dict, Iterator, List, Optional, Tuple, Type, TypedDict
+from typing import Dict, Iterator, List, Optional, Tuple, Type, TypedDict
 
+import datasets as ds
 import numpy as np
 
 from hfcocoapi.const import CATEGORIES, SUPER_CATEGORIES
@@ -25,10 +26,6 @@ from hfcocoapi.typehint import (
 from hfcocoapi.utils import tqdm
 
 logger = logging.getLogger(__name__)
-
-
-if TYPE_CHECKING:
-    import datasets as ds
 
 
 class InstanceAnnotationDict(TypedDict):
@@ -80,8 +77,6 @@ class InstancesProcessor(MsCocoProcessor):
         }
 
     def get_features(self, decode_rle: bool) -> ds.Features:
-        import datasets as ds
-
         features_dict = self.get_features_base_dict()
         annotations = ds.Sequence(
             self.get_features_instance_dict(decode_rle=decode_rle)
