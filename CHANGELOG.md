@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.4.0](https://github.com/shunk031/huggingface-datasets_cocoapi-tools/compare/v0.3.0...v0.4.0) - 2024-08-06
+- update for typehint by @shunk031 in https://github.com/shunk031/huggingface-datasets_cocoapi-tools/pull/19
+
 ## [v0.3.0](https://github.com/shunk031/huggingface-datasets_cocoapi-tools/compare/v0.2.0...v0.3.0) - 2024-08-04
 - update README.md by @shunk031 in https://github.com/shunk031/huggingface-datasets_cocoapi-tools/pull/14
 - Update for typehint by @shunk031 in https://github.com/shunk031/huggingface-datasets_cocoapi-tools/pull/16
