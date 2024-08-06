@@ -3,8 +3,9 @@ from __future__ import annotations
 import logging
 import os
 from collections import defaultdict
-from typing import TYPE_CHECKING, Dict, Iterator, List, Tuple, Type, TypedDict
+from typing import Dict, Iterator, List, Optional, Tuple, Type, TypedDict
 
+import datasets as ds
 import numpy as np
 
 from hfcocoapi.const import CATEGORIES, SUPER_CATEGORIES
@@ -20,14 +21,11 @@ from hfcocoapi.typehint import (
     ImageId,
     JsonDict,
     LicenseId,
+    PathLike,
 )
 from hfcocoapi.utils import tqdm
 
 logger = logging.getLogger(__name__)
-
-
-if TYPE_CHECKING:
-    import datasets as ds
 
 
 class InstanceAnnotationDict(TypedDict):
@@ -79,8 +77,6 @@ class InstancesProcessor(MsCocoProcessor):
         }
 
     def get_features(self, decode_rle: bool) -> ds.Features:
-        import datasets as ds
-
         features_dict = self.get_features_base_dict()
         annotations = ds.Sequence(
             self.get_features_instance_dict(decode_rle=decode_rle)
@@ -111,11 +107,11 @@ class InstancesProcessor(MsCocoProcessor):
 
     def generate_examples(  # type: ignore[override]
         self,
-        image_dir: str,
+        image_dir: PathLike,
         images: Dict[ImageId, ImageData],
         annotations: Dict[ImageId, List[InstancesAnnotationData]],
-        licenses: Dict[LicenseId, LicenseData],
         categories: Dict[CategoryId, CategoryData],
+        licenses: Optional[Dict[LicenseId, LicenseData]] = None,
     ) -> Iterator[Tuple[int, InstanceExample]]:
         for idx, image_id in enumerate(images.keys()):
             image_data = images[image_id]
@@ -130,7 +126,9 @@ class InstancesProcessor(MsCocoProcessor):
             )
             example = image_data.model_dump()
             example["image"] = image
-            example["license"] = licenses[image_data.license_id].model_dump()
+
+            if licenses and image_data.license_id is not None:
+                example["license"] = licenses[image_data.license_id].model_dump()
 
             example["annotations"] = []
             for ann in image_anns:

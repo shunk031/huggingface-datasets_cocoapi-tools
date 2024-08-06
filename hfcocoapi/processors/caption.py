@@ -3,19 +3,24 @@ from __future__ import annotations
 import logging
 import os
 from collections import defaultdict
-from typing import TYPE_CHECKING, Dict, Iterator, List, Optional, Tuple, Type, TypedDict
+from typing import Dict, Iterator, List, Optional, Tuple, Type, TypedDict
+
+import datasets as ds
 
 from hfcocoapi.models import ImageData, LicenseData
 from hfcocoapi.processors import MsCocoProcessor
 from hfcocoapi.tasks import CaptionsAnnotationData
-from hfcocoapi.typehint import AnnotationId, BaseExample, ImageId, JsonDict, LicenseId
+from hfcocoapi.typehint import (
+    AnnotationId,
+    BaseExample,
+    ImageId,
+    JsonDict,
+    LicenseId,
+    PathLike,
+)
 from hfcocoapi.utils import tqdm
 
 logger = logging.getLogger(__name__)
-
-
-if TYPE_CHECKING:
-    import datasets as ds
 
 
 class CaptionAnnotationDict(TypedDict):
@@ -61,8 +66,8 @@ class CaptionsProcessor(MsCocoProcessor):
         self,
         images: Dict[ImageId, ImageData],
         annotations: Dict[ImageId, List[CaptionsAnnotationData]],
-        licenses: Dict[LicenseId, LicenseData],
-        image_dir: Optional[str] = None,
+        image_dir: Optional[PathLike] = None,
+        licenses: Optional[Dict[LicenseId, LicenseData]] = None,
         **kwargs,
     ) -> Iterator[Tuple[int, CaptionExample]]:
         for idx, image_id in enumerate(images.keys()):
@@ -80,7 +85,9 @@ class CaptionsProcessor(MsCocoProcessor):
             )
             example = image_data.model_dump()
             example["image"] = image
-            example["license"] = licenses[image_data.license_id].model_dump()
+
+            if licenses and image_data.license_id is not None:
+                example["license"] = licenses[image_data.license_id].model_dump()
 
             example["annotations"] = []
             for ann in image_anns:
