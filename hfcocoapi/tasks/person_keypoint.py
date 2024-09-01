@@ -1,6 +1,7 @@
 from typing import Dict, Final, List
 
 from pydantic import BaseModel
+from typing_extensions import Self
 
 from hfcocoapi.models import ImageData
 from hfcocoapi.typehint import ImageId, JsonDict
@@ -47,7 +48,7 @@ class PersonKeypointsAnnotationData(InstancesAnnotationData):
         json_dict: JsonDict,
         images: Dict[ImageId, ImageData],
         decode_rle: bool,
-    ) -> "PersonKeypointsAnnotationData":
+    ) -> Self:
         segmentation = json_dict["segmentation"]
         image_id = json_dict["image_id"]
         image_data = images[image_id]
