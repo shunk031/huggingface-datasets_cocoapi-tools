@@ -33,7 +33,10 @@ MscocoSplits = Literal["train", "val", "test"]
 
 PilImage = Annotated[Image, "Pillow Image"]
 
-PathLike = Union[str, pathlib.Path]
+PathLike = Annotated[
+    Union[str, pathlib.Path],
+    "Type for path-like object",
+]
 
 
 class CategoryDict(TypedDict):
