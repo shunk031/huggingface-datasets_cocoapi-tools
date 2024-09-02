@@ -2,6 +2,7 @@ import logging
 from typing import Dict, List, Tuple, Union
 
 import numpy as np
+from typing_extensions import Self
 
 from hfcocoapi.models import ImageData
 from hfcocoapi.typehint import CompressedRLE, ImageId, JsonDict, UncompressedRLE
@@ -70,7 +71,7 @@ class InstancesAnnotationData(AnnotationData):
         json_dict: JsonDict,
         images: Dict[ImageId, ImageData],
         decode_rle: bool,
-    ) -> "InstancesAnnotationData":
+    ) -> Self:
         segmentation = json_dict.pop("segmentation")
         image_id = json_dict.pop("image_id")
 

@@ -1,13 +1,15 @@
-from typing import Dict, Final, List
+from typing import Dict, Final, List, Literal
 
 from pydantic import BaseModel
+from typing_extensions import Self
 
 from hfcocoapi.models import ImageData
 from hfcocoapi.typehint import ImageId, JsonDict
 
 from .instance import InstancesAnnotationData
 
-KEYPOINT_STATE: Final[List[str]] = ["unknown", "invisible", "visible"]
+KeypointState = Literal["unknown", "invisible", "visible"]
+KEYPOINT_STATES: Final[List[KeypointState]] = ["unknown", "invisible", "visible"]
 
 
 class PersonKeypoint(BaseModel):
@@ -22,8 +24,8 @@ class PersonKeypointsAnnotationData(InstancesAnnotationData):
     keypoints: List[PersonKeypoint]
 
     @classmethod
-    def v_keypoint_to_state(cls, keypoint_v: int) -> str:
-        return KEYPOINT_STATE[keypoint_v]
+    def v_keypoint_to_state(cls, keypoint_v: int) -> KeypointState:
+        return KEYPOINT_STATES[keypoint_v]
 
     @classmethod
     def get_person_keypoints(
@@ -47,7 +49,7 @@ class PersonKeypointsAnnotationData(InstancesAnnotationData):
         json_dict: JsonDict,
         images: Dict[ImageId, ImageData],
         decode_rle: bool,
-    ) -> "PersonKeypointsAnnotationData":
+    ) -> Self:
         segmentation = json_dict["segmentation"]
         image_id = json_dict["image_id"]
         image_data = images[image_id]

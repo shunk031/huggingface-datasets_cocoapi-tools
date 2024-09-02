@@ -4,18 +4,39 @@ from typing import Annotated, Any, Dict, List, Literal, Tuple, Union
 from PIL.Image import Image
 from typing_extensions import TypedDict
 
-JsonDict = Dict[str, Any]
-ImageId = int
-AnnotationId = int
-LicenseId = int
-CategoryId = int
-Bbox = Tuple[float, float, float, float]
+JsonDict = Annotated[
+    Dict[str, Any],
+    "Type for JSON-like dictionary",
+]
+ImageId = Annotated[
+    int,
+    "Type for image ID",
+]
+AnnotationId = Annotated[
+    int,
+    "Type for annotation ID",
+]
+LicenseId = Annotated[
+    int,
+    "Type for license ID",
+]
+CategoryId = Annotated[
+    int,
+    "Type for category ID",
+]
+Bbox = Annotated[
+    Tuple[float, float, float, float],
+    "Type for bounding box",
+]
 
 MscocoSplits = Literal["train", "val", "test"]
 
 PilImage = Annotated[Image, "Pillow Image"]
 
-PathLike = Union[str, pathlib.Path]
+PathLike = Annotated[
+    Union[str, pathlib.Path],
+    "Type for path-like object",
+]
 
 
 class CategoryDict(TypedDict):
