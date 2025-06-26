@@ -6,7 +6,7 @@ from typing_extensions import Self
 from hfcocoapi.models import ImageData
 from hfcocoapi.typehint import ImageId, JsonDict
 
-from .instance import InstancesAnnotationData
+from .instance import InstancesAnnotationData, compress_rle, rle_segmentation_to_mask
 
 KeypointState = Literal["unknown", "invisible", "visible"]
 KEYPOINT_STATES: Final[List[KeypointState]] = ["unknown", "invisible", "visible"]
@@ -56,14 +56,14 @@ class PersonKeypointsAnnotationData(InstancesAnnotationData):
         iscrowd = bool(json_dict["iscrowd"])
 
         segmentation_mask = (
-            cls.rle_segmentation_to_mask(
+            rle_segmentation_to_mask(
                 segmentation=segmentation,
                 iscrowd=iscrowd,
                 height=image_data.height,
                 width=image_data.width,
             )
             if decode_rle
-            else cls.compress_rle(
+            else compress_rle(
                 segmentation=segmentation,
                 iscrowd=iscrowd,
                 height=image_data.height,
