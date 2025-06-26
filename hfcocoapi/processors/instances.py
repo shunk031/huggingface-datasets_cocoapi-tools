@@ -3,12 +3,12 @@ from __future__ import annotations
 import logging
 import os
 from collections import defaultdict
-from typing import Dict, Iterator, List, Optional, Tuple, Type, TypedDict
+from typing import Dict, Iterator, List, Optional, Sequence, Tuple, Type, TypedDict
 
-import datasets as ds
 import numpy as np
 
-from hfcocoapi.const import CATEGORIES, SUPER_CATEGORIES
+import datasets as ds
+from hfcocoapi.const import COCO_CATEGORIES, COCO_SUPER_CATEGORIES
 from hfcocoapi.models import CategoryData, ImageData, LicenseData
 from hfcocoapi.processors import MsCocoProcessor
 from hfcocoapi.tasks import InstancesAnnotationData
@@ -44,7 +44,12 @@ class InstanceExample(BaseExample):
 
 
 class InstancesProcessor(MsCocoProcessor):
-    def get_features_instance_dict(self, decode_rle: bool):
+    def get_features_instance_dict(
+        self,
+        decode_rle: bool,
+        categories: Sequence[str] = COCO_CATEGORIES,
+        super_categories: Sequence[str] = COCO_SUPER_CATEGORIES,
+    ):
         import datasets as ds
 
         segmentation_feature = (
@@ -66,20 +71,29 @@ class InstancesProcessor(MsCocoProcessor):
             "category": {
                 "category_id": ds.Value("int32"),
                 "name": ds.ClassLabel(
-                    num_classes=len(CATEGORIES),
-                    names=CATEGORIES,
+                    num_classes=len(categories),
+                    names=categories,
                 ),
                 "supercategory": ds.ClassLabel(
-                    num_classes=len(SUPER_CATEGORIES),
-                    names=SUPER_CATEGORIES,
+                    num_classes=len(super_categories),
+                    names=super_categories,
                 ),
             },
         }
 
-    def get_features(self, decode_rle: bool) -> ds.Features:
+    def get_features(
+        self,
+        decode_rle: bool,
+        categories: Sequence[str] = COCO_CATEGORIES,
+        super_categories: Sequence[str] = COCO_SUPER_CATEGORIES,
+    ) -> ds.Features:
         features_dict = self.get_features_base_dict()
         annotations = ds.Sequence(
-            self.get_features_instance_dict(decode_rle=decode_rle)
+            self.get_features_instance_dict(
+                decode_rle=decode_rle,
+                categories=categories,
+                super_categories=super_categories,
+            )
         )
         features_dict.update({"annotations": annotations})
         return ds.Features(features_dict)
