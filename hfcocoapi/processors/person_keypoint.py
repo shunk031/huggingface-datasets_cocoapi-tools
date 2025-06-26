@@ -3,10 +3,10 @@ from __future__ import annotations
 import logging
 import os
 from collections import defaultdict
-from typing import Dict, Iterator, List, Optional, Tuple, TypedDict
+from typing import Dict, Iterator, List, Optional, Sequence, Tuple, TypedDict
 
 import datasets as ds
-
+from hfcocoapi.const import COCO_CATEGORIES, COCO_SUPER_CATEGORIES
 from hfcocoapi.models import CategoryData, ImageData, LicenseData
 from hfcocoapi.tasks import PersonKeypointsAnnotationData
 from hfcocoapi.typehint import BaseExample, CategoryId, ImageId, JsonDict, LicenseId
@@ -34,9 +34,18 @@ class PersonKeypointExample(BaseExample):
 
 
 class PersonKeypointsProcessor(InstancesProcessor):
-    def get_features(self, decode_rle: bool) -> ds.Features:
+    def get_features(
+        self,
+        decode_rle: bool,
+        categories: Sequence[str] = COCO_CATEGORIES,
+        super_categories: Sequence[str] = COCO_SUPER_CATEGORIES,
+    ) -> ds.Features:
         features_dict = self.get_features_base_dict()
-        features_instance_dict = self.get_features_instance_dict(decode_rle=decode_rle)
+        features_instance_dict = self.get_features_instance_dict(
+            decode_rle=decode_rle,
+            categories=categories,
+            super_categories=super_categories,
+        )
         features_instance_dict.update(
             {
                 "keypoints": ds.Sequence(
