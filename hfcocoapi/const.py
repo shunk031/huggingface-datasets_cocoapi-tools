@@ -1,6 +1,6 @@
-from typing import Final, List
+from typing import Final, Tuple
 
-CATEGORIES: Final[List[str]] = [
+COCO_CATEGORIES: Final[Tuple[str, ...]] = (
     "person",
     "bicycle",
     "car",
@@ -81,9 +81,9 @@ CATEGORIES: Final[List[str]] = [
     "teddy bear",
     "hair drier",
     "toothbrush",
-]
+)
 
-SUPER_CATEGORIES: Final[List[str]] = [
+COCO_SUPER_CATEGORIES: Final[Tuple[str, ...]] = (
     "person",
     "vehicle",
     "outdoor",
@@ -96,4 +96,4 @@ SUPER_CATEGORIES: Final[List[str]] = [
     "electronic",
     "appliance",
     "indoor",
-]
+)
